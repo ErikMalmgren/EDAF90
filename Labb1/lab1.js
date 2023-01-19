@@ -1,7 +1,7 @@
 'use strict';
 /**
- * Reflection question 1
- * your answer goes here
+ * JavaScript empty strings, null and undefined 
+ * all evaluate to false in a boolean context.
  */
 
 const imported = require("./inventory.js");
