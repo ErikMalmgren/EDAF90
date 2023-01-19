@@ -1,31 +1,41 @@
 'use strict';
 /**
+ * Reflection question 1
  * JavaScript empty strings, null and undefined 
  * all evaluate to false in a boolean context.
  */
 
 const imported = require("./inventory.js");
 
-console.log('inventory: ' + imported.inventory['Sallad']);
+// console.log('inventory: ' + imported.inventory['Sallad']);
 
-console.log('Object.keys():')
+// console.log('Object.keys():')
 let names = Object.keys(imported.inventory);
 names
-  .sort((a, b) => a.localeCompare(b, "sv", { sensitivity: 'case' }))
-  .forEach(name => console.log(name));
+  .sort((a, b) => a.localeCompare(b, "sv", { sensitivity: 'case' }));
 
-console.log('\n\nfor ... in:')
-for (const name in imported.inventory) {
-  console.log(name);
-}
+// console.log('\n\nfor ... in:')
+// for (const name in imported.inventory) {
+//  console.log(name);
+// }
 /**
  * Reflection question 2
+ * The for...in loop is not guaranteed 
+ * to iterate over the properties in any particular order.
+ * The Object.keys() method returns an array of a given 
+ * object's own enumerable properties.
+ * Depending on enumerable properties of the object 
+ * 
+ * Sort is not printed since it is part of the array and
+ * not the object.
  */
 
 console.log('\n--- Assignment 1 ---------------------------------------')
 
 function makeOptions(inv, prop) {
-  return 'TODO';
+  return Object.keys(inv)
+          .filter(name => inv[name][prop])
+          .map(name => '<option value="' + name + '"> ' + name + ", " +inv[name]['price'] + "kr" + '</option>');
 }
 
 console.log(makeOptions(imported.inventory, 'foundation'));
