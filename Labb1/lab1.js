@@ -46,11 +46,12 @@ class Salad {
     this.ingredients = [];
   }
   add(name, properties) {
-    this.ingredients.push(name, properties);
+    this.ingredients.push({name: name, properties: properties});
     return this;
    }
   remove(name) {
-    
+    this.ingredients = this.ingredients.filter(pog => pog.name !== name);
+    return this;
   }
 }
 
@@ -67,23 +68,33 @@ myCaesarSalad.remove('Gurka');
 console.log(JSON.stringify(myCaesarSalad) + '\n');
 
 console.log('\n--- Assignment 3 ---------------------------------------')
-//console.log('En ceasarsallad kostar ' + myCaesarSalad.getPrice() + 'kr');
+
+Salad.prototype.getPrice = function () {
+  console.log(Object.values(this.ingredients));
+  return Object.values(this.ingredients).reduce((previous, current) => previous + current.price, 0);
+}
+
+Salad.prototype.count = function () {
+
+}
+
+console.log('En ceasarsallad kostar ' + myCaesarSalad.getPrice() + 'kr');
 // En ceasarsallad kostar 45kr
 //console.log('En ceasarsallad har ' + myCaesarSalad.count('lactose') + ' ingredienser med laktos');
 // En ceasarsallad har 2 ingredienser med laktos
 //console.log('En ceasarsallad har ' + myCaesarSalad.count('extra') + ' tillbehör');
 // En ceasarsallad har 3 tillbehör
 
-/*
+
 console.log('\n--- reflection question 3 ---------------------------------------')
-console.log('typeof Salad: ' + typeof Salad);
-console.log('typeof Salad.prototype: ' + typeof Salad.prototype);
-console.log('typeof Salad.prototype.prototype: ' + typeof Salad.prototype.prototype);
-console.log('typeof myCaesarSalad: ' + typeof myCaesarSalad);
-console.log('typeof myCaesarSalad.prototype: ' + typeof myCaesarSalad.prototype);
-console.log('check 1: ' + (Salad.prototype === Object.getPrototypeOf(myCaesarSalad)));
-console.log('check 2: ' + (Object.prototype === Object.getPrototypeOf(Salad.prototype)));
-*/
+console.log('typeof Salad: ' + typeof Salad); // function
+console.log('typeof Salad.prototype: ' + typeof Salad.prototype); // object
+console.log('typeof Salad.prototype.prototype: ' + typeof Salad.prototype.prototype); // undefined
+console.log('typeof myCaesarSalad: ' + typeof myCaesarSalad); // object
+console.log('typeof myCaesarSalad.prototype: ' + typeof myCaesarSalad.prototype); // undefined
+console.log('check 1: ' + (Salad.prototype === Object.getPrototypeOf(myCaesarSalad))); // true
+console.log('check 2: ' + (Object.prototype === Object.getPrototypeOf(Salad.prototype))); // true
+
 console.log('\n--- Assignment 4 ---------------------------------------')
 /*
 const objectCopy = new Salad(myCaesarSalad);
