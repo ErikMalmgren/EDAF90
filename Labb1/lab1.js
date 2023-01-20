@@ -43,11 +43,18 @@ console.log(makeOptions(imported.inventory, 'foundation'));
 console.log('\n--- Assignment 2 ---------------------------------------')
 class Salad {
   constructor(arg) {
-    if (typeof(arg) === JSON) {
+    if (arg instanceof Salad) {
+
+      let otherSalad = {...arg};
+      Object.assign(this, otherSalad);
+      return;
+
+    } else if (typeof arg === "string") {
+      this.ingredients = JSON.parse(arg).ingredients;
+      return;
 
     }
-    if (arg instanceof Salad) {
-    }
+
     this.ingredients = {};
   }
   add(name, properties) {
@@ -104,13 +111,14 @@ console.log('\n--- Assignment 4 ---------------------------------------')
 
 const objectCopy = new Salad(myCaesarSalad);
 const json = JSON.stringify(myCaesarSalad);
+console.log(json);
 const jsonCopy = new Salad(json);
-console.log('myCeasarSalad\n' + JSON.stringify(myCaesarSalad));
-console.log('copy from object\n' + JSON.stringify(objectCopy));
+// console.log('myCeasarSalad\n' + JSON.stringify(myCaesarSalad));
+// console.log('copy from object\n' + JSON.stringify(objectCopy));
 console.log('copy from json\n' + JSON.stringify(jsonCopy));
-objectCopy.add('Gurka', imported.inventory['Gurka']);
-console.log('originalet kostar kostar ' + myCaesarSalad.getPrice() + ' kr');
-console.log('med gurka kostar den ' + objectCopy.getPrice() + ' kr');
+// objectCopy.add('Gurka', imported.inventory['Gurka']);
+// console.log('originalet kostar kostar ' + myCaesarSalad.getPrice() + ' kr');
+// console.log('med gurka kostar den ' + objectCopy.getPrice() + ' kr');
 
 console.log('\n--- Assignment 5 ---------------------------------------')
 /*
