@@ -50,9 +50,7 @@ class Salad {
     return this;
    }
   remove(name) {
-    this.ingredients.filter(pog => pog.name !== name);
-    console.log(this.ingredients);
-    return this;
+    
   }
 }
 
