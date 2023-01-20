@@ -6,6 +6,8 @@
  */
 
 const imported = require("./inventory.js");
+const { v4 : uuidv4} = require('uuid');
+
 
 // console.log('inventory: ' + imported.inventory['Sallad']);
 
@@ -42,11 +44,13 @@ console.log(makeOptions(imported.inventory, 'foundation'));
 
 console.log('\n--- Assignment 2 ---------------------------------------')
 class Salad {
+  static instanceCounter = 0;
   constructor(arg) {
+    const uuid = uuidv4();
+    this.uuid = uuid;
+    this.id = 'salad_' + Salad.instanceCounter++;
     if (arg instanceof Salad) {
-
-      let otherSalad = {...arg};
-      Object.assign(this, otherSalad);
+      this.ingredients = {... arg.ingredients};
       return;
 
     } else if (typeof arg === "string") {
@@ -57,8 +61,8 @@ class Salad {
 
     this.ingredients = {};
   }
-  add(name, properties) {
-    this.ingredients[name] = properties;
+  add(name, property) {
+    this.ingredients[name] = property;
     return this;
    }
   remove(name) {
@@ -82,7 +86,7 @@ console.log(JSON.stringify(myCaesarSalad) + '\n');
 console.log('\n--- Assignment 3 ---------------------------------------')
 
 Salad.prototype.getPrice = function () {
-  return Object.values(this.ingredients).reduce((previous, current) => current.price + previous, 0);
+  return Object.values(this.ingredients).reduce((previous, current) => previous + current.price*(current.amount || 1), 0);
 }
 
 Salad.prototype.count = function (property) {
@@ -116,11 +120,25 @@ console.log('myCeasarSalad\n' + JSON.stringify(myCaesarSalad));
 console.log('copy from object\n' + JSON.stringify(objectCopy));
 console.log('copy from json\n' + JSON.stringify(jsonCopy));
 objectCopy.add('Gurka', imported.inventory['Gurka']);
-console.log('originalet kostar kostar ' + myCaesarSalad.getPrice() + ' kr');
+console.log('originalet kostar ' + myCaesarSalad.getPrice() + ' kr');
 console.log('med gurka kostar den ' + objectCopy.getPrice() + ' kr');
 
 console.log('\n--- Assignment 5 ---------------------------------------')
-/*
+
+class GourmetSalad extends Salad{
+  constructor(arg) {
+    super(arg)
+  }
+
+  add(name, property, amount) {
+    let propCop = {...property};
+    propCop['amount'] = amount;
+    super.add(name, propCop);
+    return this;
+  }
+
+}
+
 let myGourmetSalad = new GourmetSalad()
   .add('Sallad', imported.inventory['Sallad'], 0.5)
   .add('Kycklingfilé', imported.inventory['Kycklingfilé'], 2)
@@ -131,19 +149,22 @@ let myGourmetSalad = new GourmetSalad()
 console.log('Min gourmetsallad med lite bacon kostar ' + myGourmetSalad.getPrice() + ' kr');
 myGourmetSalad.add('Bacon', imported.inventory['Bacon'], 1)
 console.log('Med extra bacon kostar den ' + myGourmetSalad.getPrice() + ' kr');
-*/
+
 console.log('\n--- Assignment 6 ---------------------------------------')
-/*
+
 console.log('Min gourmetsallad har id: ' + myGourmetSalad.id);
 console.log('Min gourmetsallad har uuid: ' + myGourmetSalad.uuid);
-*/
+
 
 /**
  * Reflection question 4
+ * The salad function
  */
 /**
  * Reflection question 5
+ * You can set the writable property to false, which makes the id property read only
  */
 /**
  * Reflection question 6
+ * # makes it private 
  */
