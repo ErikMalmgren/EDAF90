@@ -42,15 +42,20 @@ console.log(makeOptions(imported.inventory, 'foundation'));
 
 console.log('\n--- Assignment 2 ---------------------------------------')
 class Salad {
-  constructor() {
-    this.ingredients = [];
+  constructor(arg) {
+    if (typeof(arg) === JSON) {
+
+    }
+    if (arg instanceof Salad) {
+    }
+    this.ingredients = {};
   }
   add(name, properties) {
-    this.ingredients.push({name: name, properties: properties});
+    this.ingredients[name] = properties;
     return this;
    }
   remove(name) {
-    this.ingredients = this.ingredients.filter(pog => pog.name !== name);
+    delete this.ingredients[name];
     return this;
   }
 }
@@ -70,19 +75,19 @@ console.log(JSON.stringify(myCaesarSalad) + '\n');
 console.log('\n--- Assignment 3 ---------------------------------------')
 
 Salad.prototype.getPrice = function () {
-  console.log(Object.values(this.ingredients));
-  return Object.values(this.ingredients).reduce((previous, current) => previous + current.price, 0);
+  return Object.values(this.ingredients).reduce((previous, current) => current.price + previous, 0);
 }
 
-Salad.prototype.count = function () {
-
+Salad.prototype.count = function (property) {
+  return Object.values(this.ingredients).filter(prop => prop[property])
+                                        .reduce((previous, current) => previous + 1, 0);
 }
 
 console.log('En ceasarsallad kostar ' + myCaesarSalad.getPrice() + 'kr');
 // En ceasarsallad kostar 45kr
-//console.log('En ceasarsallad har ' + myCaesarSalad.count('lactose') + ' ingredienser med laktos');
+console.log('En ceasarsallad har ' + myCaesarSalad.count('lactose') + ' ingredienser med laktos');
 // En ceasarsallad har 2 ingredienser med laktos
-//console.log('En ceasarsallad har ' + myCaesarSalad.count('extra') + ' tillbehör');
+console.log('En ceasarsallad har ' + myCaesarSalad.count('extra') + ' tillbehör');
 // En ceasarsallad har 3 tillbehör
 
 
@@ -96,17 +101,17 @@ console.log('check 1: ' + (Salad.prototype === Object.getPrototypeOf(myCaesarSal
 console.log('check 2: ' + (Object.prototype === Object.getPrototypeOf(Salad.prototype))); // true
 
 console.log('\n--- Assignment 4 ---------------------------------------')
-/*
+
 const objectCopy = new Salad(myCaesarSalad);
 const json = JSON.stringify(myCaesarSalad);
 const jsonCopy = new Salad(json);
-console.log('myCesarSalad\n' + JSON.stringify(myCaesarSalad));
+console.log('myCeasarSalad\n' + JSON.stringify(myCaesarSalad));
 console.log('copy from object\n' + JSON.stringify(objectCopy));
 console.log('copy from json\n' + JSON.stringify(jsonCopy));
 objectCopy.add('Gurka', imported.inventory['Gurka']);
 console.log('originalet kostar kostar ' + myCaesarSalad.getPrice() + ' kr');
 console.log('med gurka kostar den ' + objectCopy.getPrice() + ' kr');
-*/
+
 console.log('\n--- Assignment 5 ---------------------------------------')
 /*
 let myGourmetSalad = new GourmetSalad()
