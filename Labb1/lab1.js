@@ -42,11 +42,20 @@ console.log(makeOptions(imported.inventory, 'foundation'));
 
 console.log('\n--- Assignment 2 ---------------------------------------')
 class Salad {
-  constructor() {}
-  add(name, properties) { }
-  remove(name) {}
+  constructor() {
+    this.ingredients = [];
+  }
+  add(name, properties) {
+    this.ingredients.push(name, properties);
+    return this;
+   }
+  remove(name) {
+    this.ingredients.filter(pog => pog.name !== name);
+    console.log(this.ingredients);
+    return this;
+  }
 }
-/*
+
 let myCaesarSalad = new Salad()
   .add('Sallad', imported.inventory['Sallad'])
   .add('Kycklingfilé', imported.inventory['Kycklingfilé'])
@@ -58,7 +67,7 @@ let myCaesarSalad = new Salad()
 console.log(JSON.stringify(myCaesarSalad) + '\n');
 myCaesarSalad.remove('Gurka');
 console.log(JSON.stringify(myCaesarSalad) + '\n');
-*/
+
 console.log('\n--- Assignment 3 ---------------------------------------')
 //console.log('En ceasarsallad kostar ' + myCaesarSalad.getPrice() + 'kr');
 // En ceasarsallad kostar 45kr
