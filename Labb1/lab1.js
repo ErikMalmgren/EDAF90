@@ -37,7 +37,8 @@ console.log('\n--- Assignment 1 ---------------------------------------')
 function makeOptions(inv, prop) {
   return Object.keys(inv)
           .filter(name => inv[name][prop])
-          .map(name => '<option value="' + name + '"> ' + name + ", " +inv[name]['price'] + "kr" + '</option>');
+          .map(name => '<option value="' + name + '"> ' + name + ", " +inv[name]['price'] + "kr" + '</option>')
+          .reduce((res, curr) => res + "\n" + curr, "");
 }
 
 console.log(makeOptions(imported.inventory, 'foundation'));
