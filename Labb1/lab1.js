@@ -13,13 +13,12 @@ const { v4 : uuidv4} = require('uuid');
 
 // console.log('Object.keys():')
 let names = Object.keys(imported.inventory);
-names
-  .sort((a, b) => a.localeCompare(b, "sv", { sensitivity: 'case' }));
+  names.sort((a, b) => a.localeCompare(b, "sv", { sensitivity: 'case' }));
 
-// console.log('\n\nfor ... in:')
-// for (const name in imported.inventory) {
-//  console.log(name);
-// }
+console.log('\n\nfor ... in:')
+for (const name in imported.inventory) {
+ console.log(name);
+}
 /**
  * Reflection question 2
  * The for...in loop is not guaranteed 
@@ -30,6 +29,7 @@ names
  * 
  * Sort is not printed since it is part of the array and
  * not the object.
+ * For in innehåller inherited också, Objekt.keys får inte inherited
  */
 
 console.log('\n--- Assignment 1 ---------------------------------------')
@@ -38,7 +38,7 @@ function makeOptions(inv, prop) {
   return Object.keys(inv)
           .filter(name => inv[name][prop])
           .map(name => '<option value="' + name + '"> ' + name + ", " +inv[name]['price'] + "kr" + '</option>')
-          .reduce((res, curr) => res + "\n" + curr, "");
+          .reduce((res, curr) => res + "\n" + curr, ""); //.join funkar här också
 }
 
 console.log(makeOptions(imported.inventory, 'foundation'));
@@ -56,6 +56,7 @@ class Salad {
 
     } else if (typeof arg === "string") {
       this.ingredients = JSON.parse(arg).ingredients;
+      //Kopia ska ha samma id
       return;
 
     }
@@ -89,10 +90,11 @@ console.log('\n--- Assignment 3 ---------------------------------------')
 Salad.prototype.getPrice = function () {
   return Object.values(this.ingredients).reduce((previous, current) => previous + current.price*(current.amount || 1), 0);
 }
+//Beräkna amount i GourmentSalad classen
 
 Salad.prototype.count = function (property) {
   return Object.values(this.ingredients).filter(prop => prop[property])
-                                        .reduce((previous, current) => previous + 1, 0);
+                                        .reduce((previous, current) => previous + 1, 0); //reduce här kan bli .length
 }
 
 console.log('En ceasarsallad kostar ' + myCaesarSalad.getPrice() + 'kr');
@@ -131,12 +133,14 @@ class GourmetSalad extends Salad{
     super(arg)
   }
 
-  add(name, property, amount) {
+  add(name, property, amount = 1) {
     let propCop = {...property};
-    propCop['amount'] = amount;
+    propCop['amount'] = (amount + this.ingredients[name]?.amount ?? 0) ;
     super.add(name, propCop);
     return this;
   }
+
+  //Copy på gourmentsalad kommer konflikta på amount
 
 }
 
@@ -164,8 +168,9 @@ console.log('Min gourmetsallad har uuid: ' + myGourmetSalad.uuid);
 /**
  * Reflection question 5
  * You can set the writable property to false, which makes the id property read only
+ * använder object.defineProptery
  */
 /**
  * Reflection question 6
- * # makes it private 
+ * # makes it private, funkar inte med Stringify
  */
