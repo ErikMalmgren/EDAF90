@@ -14,11 +14,11 @@ function ComposeSalad(props) {
     <div className="container col-12">
       <div className="row h-200 p-5 bg-light border rounded-3">
         <h2>Välj bas</h2>
-          <select value ={foundation} onChange = {e => setFoundation(...e.target.value)}>
+          <select value ={foundation} onChange = {e => setFoundation(e.target.value)}>
             {foundations.map(name => <option key={name}  value={name}>  {name}</option>)}
           </select>
         <h2>Välj protein</h2>
-          <select value ={protein} onChange = {e => setProtein(...e.target.value)}>
+          <select value ={protein} onChange = {e => setProtein(e.target.value)}>
             {proteins.map(name => <option key={name}  value={name}>  {name}</option>)}
           </select>
         <h2>Välj tillbehör</h2>
