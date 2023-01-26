@@ -9,10 +9,8 @@ function ComposeSalad(props) {
     <div className="container col-12">
       <div className="row h-200 p-5 bg-light border rounded-3">
         <h2>Välj bas</h2>
-          <select key ={foundation} onChange={e => setFoundation(e.target.value)}>
-            {extras.map(name => <option key={name} value={name}
-            >{name}</option>)}
-          {/* {extras.map(name => <div key={name} className="col-4">{name}</div>)} */}
+          <select value ={foundation} onChange={e => setFoundation(e.target.value)}>
+            {extras.map(name => <option key={name} value={name}> {name}</option>)}
           </select>
       </div>
     </div>

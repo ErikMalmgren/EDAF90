@@ -2,17 +2,19 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import inventory from './inventory.ES6';
 import ComposeSalad from './ComposeSalad';
+import { useState } from 'react';
 
 function App()
 {
   let extras = Object.keys(inventory).filter(name => inventory[name].extra);
+  const [base, setBase] = useState("Pasta");
   return (
     <div className="container py-4">
     <header className="pb-3 mb-4 border-bottom">
       <span className="fs-4">Min egen salladsbar</span>
     </header>
 
-    {<ComposeSalad inventory={inventory}/>}
+    {<ComposeSalad base={base} setBase={setBase} inventory={inventory}/>}
 
 
     <div className="continer col-12">
