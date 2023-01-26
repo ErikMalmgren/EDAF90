@@ -1,6 +1,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import inventory from './inventory.ES6';
+import ComposeSalad from './ComposeSalad';
 
 function App()
 {
