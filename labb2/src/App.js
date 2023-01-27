@@ -15,7 +15,7 @@ function App() {
     cart.push(newSalad);
     setSalads([...salads, newSalad]);
     console.log("PASSED UP");
-    console.log(cart[0]);
+    console.log(newSalad);
   }
   return (
   <div className="container py-4">
@@ -23,9 +23,11 @@ function App() {
       <span className="fs-4">Min egen salladsbar</span>
     </header>
     <div className="cart-container">
-    <h2>Cart</h2>
-      {cart.map((item, index) => (<li key={index}>{item.name}</li>))}
-  </div>
+      <h2>Cart</h2>
+        <ul>
+          {cart.map((salad, index) => (<li key={index}>{JSON.stringify(salad)}</li>))}
+        </ul> 
+    </div>
 
 
     {<ComposeSalad inventory={inventory} onSaladSubmit={handleSaladSubmit}/>}
