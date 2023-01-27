@@ -22,7 +22,7 @@ function ComposeSalad(props) {
       newState[name] = checked;
       return newState;
     });
-  };
+  };  
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -32,7 +32,7 @@ function ComposeSalad(props) {
 
     ingredients.forEach((ingredient) => salad.add(ingredient, inventory[ingredient]));
     resetSalad();
-    console.log(salad);
+    props.onSaladSubmit(salad);
   }
 
   const resetSalad = function () {
@@ -57,7 +57,7 @@ function ComposeSalad(props) {
       <h2>Välj tillbehör</h2>
         {extras.map((item, index) => (
            <div key={index} className="col-3 p-1 fs-6">
-           <input value={item} type="checkbox" onChange={handleCheckboxChange} name={item} checked={extra[item]} />
+           <input value={item} type="checkbox" onChange={handleCheckboxChange} name={item} checked={extra[item] || false} />
            <span> {item}</span>
          </div>
         ))}
