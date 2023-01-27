@@ -15,8 +15,6 @@ function ComposeSalad(props) {
   let dressings = Object.keys(props.inventory).filter(name => props.inventory[name].dressing);
   const [dressing, setDressing] = useState('Ceasardressing'); 
 
-  let cart = [];
-
   const handleCheckboxChange = event => {
     const { name, checked } = event.target;
     setExtra(oldState => {
@@ -28,12 +26,21 @@ function ComposeSalad(props) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    let extras = Object.keys(extra).filter((n) => extra[n]);
+    let extras = Object.entries(extra).filter(([name, selected]) => selected)
+                                      .map(([name]) => name);    
     let ingredients = [foundation, protein, ...extras, dressing];
     let salad = new Salad();
 
     ingredients.forEach((ingredient) => salad.add(ingredient, inventory[ingredient]));
-    cart.push(salad);
+    resetSalad();
+    console.log(JSON.stringify(salad));
+  }
+
+  const resetSalad = function () {
+    setFoundation('Pasta');
+    setProtein('Kycklingfilé');
+    setExtra({Bacon: true, Fetaost: true});
+    setDressing('Ceasardressing');
   }
 
   return (
