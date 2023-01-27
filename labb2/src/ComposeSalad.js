@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import inventory from './inventory.ES6.js';
+import Salad from './Salad.ES6.js';
 
 function ComposeSalad(props) {
   let foundations = Object.keys(props.inventory).filter(name => props.inventory[name].foundation);
@@ -11,7 +13,9 @@ function ComposeSalad(props) {
   const [extra, setExtra] = useState({Bacon: true, Fetaost: true});
 
   let dressings = Object.keys(props.inventory).filter(name => props.inventory[name].dressing);
-  const [dressing, setDressing] = useState(); 
+  const [dressing, setDressing] = useState('Ceasardressing'); 
+
+  let cart = [];
 
   const handleCheckboxChange = event => {
     const { name, checked } = event.target;
@@ -22,14 +26,19 @@ function ComposeSalad(props) {
     });
   };
 
-  const submitHandler = event => {
+  const handleSubmit = event => {
     event.preventDefault();
-    
+    let extras = Object.keys(extra).filter((n) => extra[n]);
+    let ingredients = [foundation, protein, ...extras, dressing];
+    let salad = new Salad();
+
+    ingredients.forEach((ingredient) => salad.add(ingredient, inventory[ingredient]));
+    cart.push(salad);
   }
 
   return (
     <div className="container col-12">
-    <form onSubmit={submitHandler}>
+    <form onSubmit={handleSubmit}>
     <div className="row h-200 p-5 bg-light border rounded-3">
       <h2>Välj bas</h2>
         <select value={foundation} onChange={e => setFoundation(e.target.value)}>
