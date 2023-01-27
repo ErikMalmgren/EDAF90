@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import inventory from './inventory.ES6.js';
-import Salad from './Salad.ES6.js';
+import Salad from './Salad.js';
 
 function ComposeSalad(props) {
   let foundations = Object.keys(props.inventory).filter(name => props.inventory[name].foundation);
@@ -26,14 +26,13 @@ function ComposeSalad(props) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    let extras = Object.entries(extra).filter(([name, selected]) => selected)
-                                      .map(([name]) => name);    
+    let extras = Object.keys(extra).filter((n) => extra[n]);
     let ingredients = [foundation, protein, ...extras, dressing];
     let salad = new Salad();
 
     ingredients.forEach((ingredient) => salad.add(ingredient, inventory[ingredient]));
     resetSalad();
-    console.log(JSON.stringify(salad));
+    console.log(salad);
   }
 
   const resetSalad = function () {
