@@ -22,6 +22,11 @@ function App() {
     <header className="pb-3 mb-4 border-bottom">
       <span className="fs-4">Min egen salladsbar</span>
     </header>
+    <div className="cart-container">
+    <h2>Cart</h2>
+      {cart.map((item, index) => (<li key={index}>{item.name}</li>))}
+  </div>
+
 
     {<ComposeSalad inventory={inventory} onSaladSubmit={handleSaladSubmit}/>}
 
