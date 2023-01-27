@@ -22,34 +22,39 @@ function ComposeSalad(props) {
     });
   };
 
+  const submitHandler = event => {
+    event.preventDefault();
+    
+  }
+
   return (
     <div className="container col-12">
-      <div className="row h-200 p-5 bg-light border rounded-3">
-        <label>Välj bas
-          <select value ={foundation} onChange = {e => setFoundation(e.target.value)}>
-            {foundations.map(name => <option key={name}  value={name}>  {name}</option>)}
-          </select>
-        </label>
-        <label>Välj protein
-          <select value ={protein} onChange = {e => setProtein(e.target.value)}>
-            {proteins.map(name => <option key={name}  value={name}>  {name}</option>)}
-          </select>
-        </label>
-        <label>Välj tillbehör
-          {extras.map((item, index) => (
-             <div key={index} className="col-3 p-1 fs-6">
-             <input value={item} type="checkbox" onChange= {handleCheckboxChange} name={item} checked={extra[item]} />
-             <span> {item}</span>
-           </div>
-          ))}
-        </label>
-        <label>Välj dressing
-          <select value ={dressing} onChange = {e => setDressing(e.target.value)}>
-            {dressings.map(name => <option key={name}  value={name}>  {name}</option>)}
-          </select>
-        </label>
-      </div>
+    <form onSubmit={submitHandler}>
+    <div className="row h-200 p-5 bg-light border rounded-3">
+      <h2>Välj bas</h2>
+        <select value={foundation} onChange={e => setFoundation(e.target.value)}>
+          {foundations.map(name => <option key={name} value={name}>{name}</option>)}
+        </select>
+      <h2>Välj protein</h2>
+        <select value={protein} onChange={e => setProtein(e.target.value)}>
+          {proteins.map(name => <option key={name} value={name}>{name}</option>)}
+        </select>
+      <h2>Välj tillbehör</h2>
+        {extras.map((item, index) => (
+           <div key={index} className="col-3 p-1 fs-6">
+           <input value={item} type="checkbox" onChange={handleCheckboxChange} name={item} checked={extra[item]} />
+           <span> {item}</span>
+         </div>
+        ))}
+      <h2>Välj dressing</h2>
+        <select value={dressing} onChange={e => setDressing(e.target.value)}>
+          {dressings.map(name => <option key={name} value={name}>{name}</option>)}
+        </select>
     </div>
+    <button type="submit" className="btn btn-primary">Submit</button>
+  </form>
+</div>
+
   );
 }
 export default ComposeSalad;

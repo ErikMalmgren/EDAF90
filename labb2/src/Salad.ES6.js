@@ -1,5 +1,3 @@
-'use strict';
-
 const imported = require("./inventory.ES6.js");
 const { v4 : uuidv4} = require('uuid');
 
@@ -18,11 +16,13 @@ class Salad {
     this.uuid = uuid;
     this.id = 'salad_' + Salad.instanceCounter++;
     if (arg instanceof Salad) {
-      this.ingredients = {... arg.ingredients};
+      this.ingredients = {...arg.ingredients};
       return;
 
     } else if (typeof arg === "string") {
       this.ingredients = JSON.parse(arg).ingredients;
+      this.id = JSON.parse(arg).id;
+      this.uuid = JSON.parse(arg).uuid;
       //Kopia ska ha samma id
       return;
 
@@ -59,6 +59,7 @@ class GourmetSalad extends Salad{
     return this;
   }
 
-  //Copy på gourmentsalad kommer konflikta på amount
+  //Copy på gourmetsalad kommer konflikta på amount
 
 }
+export default Salad;
