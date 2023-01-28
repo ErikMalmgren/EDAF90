@@ -38,17 +38,16 @@ class Salad {
     delete this.ingredients[name];
     return this;
   }
+
+  getPrice() {
+    return Object.values(this.ingredients).reduce((previous, current) => previous + current.price,0);
+  }
+
+  count(prop) {
+    return Object.values(this.ingredients).filter((item) => item[prop]).length;
+  }
 }
 
-Salad.prototype.getPrice = function () {
-  return Object.values(this.ingredients).reduce((previous, current) => previous + current.price*(current.amount || 1), 0);
-}
-//Beräkna amount i GourmentSalad classen
-
-Salad.prototype.count = function (property) {
-  return Object.values(this.ingredients).filter(prop => prop[property])
-                                        .reduce((previous, current) => previous + 1, 0); //reduce här kan bli .length
-}
 
 class GourmetSalad extends Salad{
 
