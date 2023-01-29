@@ -6,7 +6,7 @@ import ViewOrder from './ViewOrder';
 import { useState } from 'react';
 import Salad from './Salad';
 
-let cart = [];
+const cart = [];
 
 function App() {
 
@@ -16,7 +16,6 @@ function App() {
     let newSalad = new Salad(salad);
     cart.push(newSalad);
     setSalads([...salads, newSalad]);
-    console.log(newSalad instanceof Salad);
   }
   
   return (
