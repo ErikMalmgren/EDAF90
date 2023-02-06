@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import inventory from './inventory.ES6.js';
 import Salad from './Salad.js';
+import { useNavigate } from 'react-router-dom';
 
 function ComposeSalad(props) {
   // använd usememo istället
+  const navigate = useNavigate();
   let foundations = Object.keys(props.inventory).filter(name => props.inventory[name].foundation);
   const [foundation, setFoundation] = useState('Pasta'); 
   
@@ -34,6 +36,7 @@ function ComposeSalad(props) {
     ingredients.forEach((ingredient) => salad.add(ingredient, inventory[ingredient]));
     resetSalad();
     props.onSaladSubmit(salad);
+    navigate("/view-order");
   }
 
   const resetSalad = function () {

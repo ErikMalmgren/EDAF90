@@ -4,7 +4,7 @@ import inventory from './inventory.ES6';
 import ComposeSalad from './ComposeSalad';
 import ViewOrder from './ViewOrder';
 import { useState } from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { Route, Routes, Link } from 'react-router-dom';
 
 function App(props) {
 
@@ -23,6 +23,11 @@ function App(props) {
   function Navbar(props) {
     return (
     <ul className="nav nav-tabs">
+      <li className = "nav-item">
+        <Link className="nav-link" to="/">
+          Startsida
+        </Link> 
+      </li>
       <li className="nav-item">
         <Link className="nav-link" to="/compose-salad">
           Komponera en sallad
@@ -40,8 +45,26 @@ function App(props) {
       return <div className="container py-4">
                 {<Header/>}
                 {<Navbar/>}
-                {<ViewOrder shoppingCart={salads} />} 
-                {<ComposeSalad inventory={inventory} onSaladSubmit={handleSaladSubmit}/>}
+                <Routes>
+                  <Route 
+                    path="/compose-salad" 
+                    element = {<ComposeSalad inventory={inventory} onSaladSubmit={handleSaladSubmit}/>}> 
+                  </Route>
+                  <Route
+                    path="/view-order"
+                    element = {<ViewOrder shoppingCart={salads} />} >
+                  </Route>
+                  <Route
+                    path="/"
+                    element = "Välkommen till Grönt och Skönt">
+                  </Route>
+                  <Route
+                    path="*"
+                    element="Sidan finns inte">
+                  </Route>
+        
+                </Routes>
+                
                 {<Footer/>} 
               </div>
       }
@@ -52,7 +75,7 @@ function App(props) {
             </footer> 
     }
 
-    return PageContent(props);
+  return PageContent(props);
 } 
 
 export default App;
