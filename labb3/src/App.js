@@ -56,11 +56,11 @@ function App(props) {
                   </Route>
                   <Route
                     path="/"
-                    element = "Välkommen till Grönt och Skönt">
+                    element = {<h1>Välkommen till Grönt och Skönt</h1>}>
                   </Route>
                   <Route
                     path="*"
-                    element="Sidan finns inte">
+                    element={<h1>Sidan finns inte</h1>}>
                   </Route>
         
                 </Routes>
