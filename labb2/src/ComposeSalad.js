@@ -3,6 +3,7 @@ import inventory from './inventory.ES6.js';
 import Salad from './Salad.js';
 
 function ComposeSalad(props) {
+  // använd usememo istället
   let foundations = Object.keys(props.inventory).filter(name => props.inventory[name].foundation);
   const [foundation, setFoundation] = useState('Pasta'); 
   
@@ -38,7 +39,7 @@ function ComposeSalad(props) {
   const resetSalad = function () {
     setFoundation('Pasta');
     setProtein('Kycklingfilé');
-    setExtra({Bacon: true, Fetaost: true});
+    setExtra({});
     setDressing('Ceasardressing');
   }
 
@@ -57,7 +58,7 @@ function ComposeSalad(props) {
       <h2>Välj tillbehör</h2>
         {extras.map((item, index) => (
            <div key={index} className="col-3 p-1 fs-6">
-           <input value={item} type="checkbox" onChange={handleCheckboxChange} name={item} checked={extra[item] || false} />
+           <input value={item} type="checkbox" onChange={handleCheckboxChange} name={item} checked={!!extra[item]} />
            <span> {item}</span>
          </div>
         ))}
@@ -65,8 +66,8 @@ function ComposeSalad(props) {
         <select value={dressing} onChange={e => setDressing(e.target.value)}>
           {dressings.map(name => <option key={name} value={name}>{name}</option>)}
         </select>
+        <button type="submit" className="btn btn-primary border rounded-3">Beställ</button>
     </div>
-    <button type="submit" className="btn btn-primary">Submit</button>
   </form>
 </div>
 

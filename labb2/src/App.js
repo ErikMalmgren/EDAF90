@@ -6,16 +6,13 @@ import ViewOrder from './ViewOrder';
 import { useState } from 'react';
 import Salad from './Salad';
 
-const cart = [];
 
 function App() {
 
   const[salads, setSalads] = useState([]);
 
   const handleSaladSubmit = (salad) => {
-    let newSalad = new Salad(salad);
-    cart.push(newSalad);
-    setSalads([...salads, newSalad]);
+    setSalads([...salads, salad]);
   }
   
   return (
@@ -24,7 +21,7 @@ function App() {
       <span className="fs-4">Min egen salladsbar</span>
     </header>
     
-    {<ViewOrder shoppingCart={cart} />} 
+    {<ViewOrder shoppingCart={salads} />} 
     {<ComposeSalad inventory={inventory} onSaladSubmit={handleSaladSubmit}/>}
 
     <footer className="pt-3 mt-4 text-muted border-top">
