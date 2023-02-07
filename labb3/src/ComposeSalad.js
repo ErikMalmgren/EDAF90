@@ -1,21 +1,22 @@
 import { useState } from 'react';
 import inventory from './inventory.ES6.js';
 import Salad from './Salad.js';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function ComposeSalad(props) {
+  
   // använd usememo istället
   const navigate = useNavigate();
-  let foundations = Object.keys(props.inventory).filter(name => props.inventory[name].foundation);
+  const foundations = Object.keys(props.inventory).filter(name => props.inventory[name].foundation);
   const [foundation, setFoundation] = useState('Pasta'); 
   
-  let proteins = Object.keys(props.inventory).filter(name => props.inventory[name].protein);
+  const proteins = Object.keys(props.inventory).filter(name => props.inventory[name].protein);
   const [protein, setProtein] = useState('Kycklingfilé');
   
-  let extras = Object.keys(props.inventory).filter(name => props.inventory[name].extra);
+  const extras = Object.keys(props.inventory).filter(name => props.inventory[name].extra);
   const [extra, setExtra] = useState({Bacon: true, Fetaost: true});
 
-  let dressings = Object.keys(props.inventory).filter(name => props.inventory[name].dressing);
+  const dressings = Object.keys(props.inventory).filter(name => props.inventory[name].dressing);
   const [dressing, setDressing] = useState('Ceasardressing'); 
 
   const handleCheckboxChange = event => {
@@ -29,9 +30,14 @@ function ComposeSalad(props) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    let extras = Object.keys(extra).filter((n) => extra[n]);
-    let ingredients = [foundation, protein, ...extras, dressing];
-    let salad = new Salad();
+
+    if(!event.target.checkValidity()) {
+      return;
+    }
+    
+    const extras = Object.keys(extra).filter((n) => extra[n]);
+    const ingredients = [foundation, protein, ...extras, dressing];
+    const salad = new Salad();
 
     ingredients.forEach((ingredient) => salad.add(ingredient, inventory[ingredient]));
     resetSalad();
@@ -48,26 +54,33 @@ function ComposeSalad(props) {
 
   return (
     <div className="container col-12">
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} noValidate>
     <div className="row h-200 p-5 bg-light border rounded-3">
       <h2>Välj bas</h2>
-        <select value={foundation} onChange={e => setFoundation(e.target.value)}>
+        <select value={foundation} onChange={e => setFoundation(e.target.value)} required>
           {foundations.map(name => <option key={name} value={name}>{name}</option>)}
+          <option value = ""></option>
         </select>
       <h2>Välj protein</h2>
-        <select value={protein} onChange={e => setProtein(e.target.value)}>
+        <select value={protein} onChange={e => setProtein(e.target.value)} required>
           {proteins.map(name => <option key={name} value={name}>{name}</option>)}
+          <option value = ""></option>
         </select>
       <h2>Välj tillbehör</h2>
         {extras.map((item, index) => (
-           <div key={index} className="col-3 p-1 fs-6">
-           <input value={item} type="checkbox" onChange={handleCheckboxChange} name={item} checked={!!extra[item]} />
-           <span> {item}</span>
+           <div key={index} className="col-3 p-2 fs-6">
+           <input value={item} type="checkbox" onChange={handleCheckboxChange} name={item} checked={!!extra[item]} style={{ marginRight: "5px" }} />
+           <Link 
+            to={`/view-ingredient/${item}`}
+            style={{textDecoration: "none"}}>
+            {item}
+            </Link>
          </div>
         ))}
       <h2>Välj dressing</h2>
-        <select value={dressing} onChange={e => setDressing(e.target.value)}>
+        <select value={dressing} onChange={e => setDressing(e.target.value)} required>
           {dressings.map(name => <option key={name} value={name}>{name}</option>)}
+          <option value = ""></option>
         </select>
         <button type="submit" className="btn btn-primary border rounded-3">Beställ</button>
     </div>

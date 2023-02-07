@@ -64,7 +64,7 @@ function App(props) {
                     element={<h1>Sidan finns inte</h1>}>
                   </Route>
                   <Route
-                  path = "/view-ingredient/:name"
+                  path = "view-ingredient/:name"
                   element = {<ViewIngredient inventory={inventory}/>}>  
                   </Route>
                 </Routes>

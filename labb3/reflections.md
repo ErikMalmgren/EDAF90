@@ -6,3 +6,7 @@
 
 * The pills do not use the .active css selector, while the tabs do
 
+**Reflection Question 3: What is the meaning of a leading / in a path, the difference between <Link to="/view-ingredient/:name" /> and <Link to="view-ingredient/:name" />?**
+
+* using / uses the absolute path from root directory, while not using it uses the relative path from the current directory *
+

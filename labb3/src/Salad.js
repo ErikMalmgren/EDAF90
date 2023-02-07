@@ -52,7 +52,7 @@ class Salad {
 class GourmetSalad extends Salad{
 
   add(name, property, amount = 1) {
-    let propCop = {...property};
+    const propCop = {...property};
     propCop['amount'] = (amount + this.ingredients[name]?.amount ?? 0) ;
     super.add(name, propCop);
     return this;
