@@ -31,7 +31,7 @@ function ComposeSalad(props) {
   const handleSubmit = event => {
     event.preventDefault();
 
-    if(!event.target.checkValidity()) {
+    if(!foundation || !protein || !dressing) {
       return;
     }
     
@@ -57,13 +57,13 @@ function ComposeSalad(props) {
     <form onSubmit={handleSubmit} noValidate>
     <div className="row h-200 p-5 bg-light border rounded-3">
       <h2>Välj bas</h2>
-        <select value={foundation} onChange={e => setFoundation(e.target.value)} required>
+        <select value={foundation} onChange={e => setFoundation(e.target.value)}>
           {foundations.map(name => <option key={name} value={name}>{name}</option>)}
           <option value = ""></option>
         </select>
       <h2>Välj protein</h2>
         <select value={protein} onChange={e => setProtein(e.target.value)} required>
-          {proteins.map(name => <option key={name} value={name}>{name}</option>)}
+          {proteins.map(name => <option key={name} value={name} required>{name}</option>)}
           <option value = ""></option>
         </select>
       <h2>Välj tillbehör</h2>
