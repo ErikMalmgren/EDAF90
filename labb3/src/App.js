@@ -5,6 +5,7 @@ import ComposeSalad from './ComposeSalad';
 import ViewOrder from './ViewOrder';
 import { useState } from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
+import ViewIngredient from './ViewIngredient';
 
 function App(props) {
 
@@ -62,7 +63,10 @@ function App(props) {
                     path="*"
                     element={<h1>Sidan finns inte</h1>}>
                   </Route>
-        
+                  <Route
+                  path = "/view-ingredient/:name"
+                  element = {<ViewIngredient inventory={inventory}/>}>  
+                  </Route>
                 </Routes>
                 
                 {<Footer/>} 
