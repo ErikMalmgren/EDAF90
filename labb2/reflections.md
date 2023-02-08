@@ -22,4 +22,4 @@
 #### When using a class based component this refers to the instance of the component. 
 
 ### Reflection question 7: How is the prototype chain affected when copying an object with copy = {...sourceObject}?
-#### The prototype chain is changed --> spread tar bara enumerable
+#### The prototype chain is changed --> spread tar bara enumerable, typen följer inte med
