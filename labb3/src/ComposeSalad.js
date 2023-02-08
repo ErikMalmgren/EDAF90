@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import inventory from './inventory.ES6.js';
 import Salad from './Salad.js';
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -28,21 +27,25 @@ function ComposeSalad(props) {
     });
   };  
 
+  const [formState, setFormState] = useState("d-grid gap-5");
   const handleSubmit = event => {
     event.preventDefault();
-
-    if(!foundation || !protein || !dressing) {
+    event.target.classList.add("was-validated");
+    if(!event.target.checkValidity()) {
       return;
     }
+    console.log(event);
+    console.log(event.target);
     
     const extras = Object.keys(extra).filter((n) => extra[n]);
     const ingredients = [foundation, protein, ...extras, dressing];
     const salad = new Salad();
 
-    ingredients.forEach((ingredient) => salad.add(ingredient, inventory[ingredient]));
+    ingredients.forEach((ingredient) => salad.add(ingredient, props.inventory[ingredient]));
     resetSalad();
     props.onSaladSubmit(salad);
-    navigate("/view-order");
+    // navigate("/view-order");
+
   }
 
   const resetSalad = function () {
@@ -51,21 +54,28 @@ function ComposeSalad(props) {
     setExtra({});
     setDressing('Ceasardressing');
   }
-
+  
   return (
+    // Problem med required och valid-feedback "borde" funka men säkert ett litet fel någonstans
     <div className="container col-12">
-    <form onSubmit={handleSubmit} noValidate>
+    <form onSubmit={handleSubmit}>
     <div className="row h-200 p-5 bg-light border rounded-3">
       <h2>Välj bas</h2>
-        <select value={foundation} onChange={e => setFoundation(e.target.value)}>
+        <select required name={foundation} onChange={e => {setFoundation(e.target.value); e.target.parentElement.classList.add("was-validated");}}>
           {foundations.map(name => <option key={name} value={name}>{name}</option>)}
-          <option value = ""></option>
+          <option value = "">Hej</option>
         </select>
+        <div classname="valid-feedback"> Rätt</div> 
+        <div classname="invalid-feedback"> Fel</div> 
+
       <h2>Välj protein</h2>
-        <select value={protein} onChange={e => setProtein(e.target.value)} required>
-          {proteins.map(name => <option key={name} value={name} required>{name}</option>)}
+        <select required name="protein" onChange={e => {setProtein(e.target.value); e.target.parentElement.classList.add("was-validated");}}>
+          {proteins.map(name => <option key={name} value={name}>{name}</option>)}
           <option value = ""></option>
         </select>
+        <div classname="valid-feedback"> Rätt</div> 
+        <div classname="invalid-feedback"> Fel</div> 
+
       <h2>Välj tillbehör</h2>
         {extras.map((item, index) => (
            <div key={index} className="col-3 p-2 fs-6">
@@ -78,10 +88,12 @@ function ComposeSalad(props) {
          </div>
         ))}
       <h2>Välj dressing</h2>
-        <select value={dressing} onChange={e => setDressing(e.target.value)} required>
+        <select required name={dressing} onChange= {e => {setDressing(e.target.value); e.target.parentElement.classList.add("was-validated");}}>
           {dressings.map(name => <option key={name} value={name}>{name}</option>)}
-          <option value = ""></option>
+          <option value = {false}></option>
         </select>
+        <div classname="valid-feedback"> Rätt</div> 
+        <div classname="invalid-feedback"> Fel</div> 
         <button type="submit" className="btn btn-primary border rounded-3">Beställ</button>
     </div>
   </form>
