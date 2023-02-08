@@ -27,15 +27,35 @@ function ComposeSalad(props) {
     });
   };  
 
-  const [formState, setFormState] = useState("d-grid gap-5");
+  const handleChange = event => {
+    console.log(event.target);
+    console.log(event.target.props);
+    console.log(event.target.value);
+    console.log(event.target.name);
+  
+    setFoundation(event.target.value);
+    // switch (name) {
+    //   case 'foundation':
+    //     setFoundation(value);
+    //     break;
+    //   case 'protein':
+    //     setProtein(value);
+    //     break;
+    //   case 'dressing':
+    //     setDressing(value);
+    //     break;
+    //   default:
+    //     break;
+    // }
+    event.target.parentElement.classList.add("was-validated");
+  }
+
   const handleSubmit = event => {
     event.preventDefault();
     event.target.classList.add("was-validated");
     if(!event.target.checkValidity()) {
       return;
     }
-    console.log(event);
-    console.log(event.target);
     
     const extras = Object.keys(extra).filter((n) => extra[n]);
     const ingredients = [foundation, protein, ...extras, dressing];
@@ -44,7 +64,7 @@ function ComposeSalad(props) {
     ingredients.forEach((ingredient) => salad.add(ingredient, props.inventory[ingredient]));
     resetSalad();
     props.onSaladSubmit(salad);
-    // navigate("/view-order");
+    navigate("/view-order");
 
   }
 
@@ -58,25 +78,31 @@ function ComposeSalad(props) {
   return (
     // Problem med required och valid-feedback "borde" funka men säkert ett litet fel någonstans
     <div className="container col-12">
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} noValidate>
     <div className="row h-200 p-5 bg-light border rounded-3">
+
       <h2>Välj bas</h2>
+        <div>
         <select required name={foundation} onChange={e => {setFoundation(e.target.value); e.target.parentElement.classList.add("was-validated");}}>
-          {foundations.map(name => <option key={name} value={name}>{name}</option>)}
-          <option value = "">Hej</option>
-        </select>
-        <div classname="valid-feedback"> Rätt</div> 
-        <div classname="invalid-feedback"> Fel</div> 
+          <option hidden value = "">Välj en bas!</option>
+            {foundations.map(name => <option key={name} value={name}>{name}</option>)}
+          </select>
+          <div className="valid-feedback"> Bra val!</div> 
+          <div className="invalid-feedback"> Du måste välja en salladsbas!</div> 
+        </div>
 
       <h2>Välj protein</h2>
-        <select required name="protein" onChange={e => {setProtein(e.target.value); e.target.parentElement.classList.add("was-validated");}}>
-          {proteins.map(name => <option key={name} value={name}>{name}</option>)}
-          <option value = ""></option>
-        </select>
-        <div classname="valid-feedback"> Rätt</div> 
-        <div classname="invalid-feedback"> Fel</div> 
+        <div> 
+          <select required name={protein} onChange={e => {setProtein(e.target.value); e.target.parentElement.classList.add("was-validated");}}>
+          <option hidden value = "">Välj ett protein!</option>
+            {proteins.map(name => <option key={name} value={name}>{name}</option>)}
+          </select>
+          <div className="valid-feedback"> Bra val!</div> 
+          <div className="invalid-feedback"> Du måste välja ett protein!</div> 
+        </div>
 
       <h2>Välj tillbehör</h2>
+
         {extras.map((item, index) => (
            <div key={index} className="col-3 p-2 fs-6">
            <input value={item} type="checkbox" onChange={handleCheckboxChange} name={item} checked={!!extra[item]} style={{ marginRight: "5px" }} />
@@ -87,14 +113,22 @@ function ComposeSalad(props) {
             </Link>
          </div>
         ))}
+
       <h2>Välj dressing</h2>
-        <select required name={dressing} onChange= {e => {setDressing(e.target.value); e.target.parentElement.classList.add("was-validated");}}>
-          {dressings.map(name => <option key={name} value={name}>{name}</option>)}
-          <option value = {false}></option>
-        </select>
-        <div classname="valid-feedback"> Rätt</div> 
-        <div classname="invalid-feedback"> Fel</div> 
-        <button type="submit" className="btn btn-primary border rounded-3">Beställ</button>
+
+        <div>
+          <select required name={dressing} onChange= {e => {setDressing(e.target.value); e.target.parentElement.classList.add("was-validated");}}>
+          <option hidden value = "">Välj en dressing!</option>
+            {dressings.map(name => <option key={name} value={name}>{name}</option>)}
+          </select>
+          <div className="valid-feedback"> Bra val!</div> 
+          <div className="invalid-feedback"> Du måste välja en dressing!</div> 
+        </div>
+
+        <div class = "btn-group">
+          <button type="submit" className="btn btn-primary border rounded-3">Beställ</button> 
+          <button type="reset" className="btn btn-primary border rounded-3" onClick={resetSalad}>Återställ</button>
+        </div>
     </div>
   </form>
 </div>
