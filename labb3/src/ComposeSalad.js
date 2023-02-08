@@ -31,9 +31,9 @@ function ComposeSalad(props) {
   const handleSubmit = event => {
     event.preventDefault();
     event.target.classList.add("was-validated");
-    if(!event.target.checkValidity()) {
-      return;
-    }
+    // if(!event.target.checkValidity()) { //behövs inte när required används
+    //   return;
+    // }
     
     const extras = Object.keys(extra).filter((n) => extra[n]);
     const ingredients = [foundation, protein, ...extras, dressing];
@@ -61,7 +61,7 @@ function ComposeSalad(props) {
           
           <h2>Välj bas</h2>
             <div>
-              <select required name={foundation} onChange={e => {setFoundation(e.target.value); e.target.parentElement.classList.add("was-validated");}}>
+              <select required name={foundation} value = {foundation} onChange={e => {setFoundation(e.target.value); e.target.parentElement.classList.add("was-validated");}}>
                 <option hidden value = "">Välj en bas!</option>
                 {foundations.map(name => <option key={name} value={name}>{name}</option>)}
               </select>
@@ -71,7 +71,7 @@ function ComposeSalad(props) {
 
           <h2>Välj protein</h2>
             <div> 
-              <select required name={protein} onChange={e => {setProtein(e.target.value); e.target.parentElement.classList.add("was-validated");}}>
+              <select required name={protein} value = {protein} onChange={e => {setProtein(e.target.value); e.target.parentElement.classList.add("was-validated");}}>
                 <option hidden value = "">Välj ett protein!</option>
                 {proteins.map(name => <option key={name} value={name}>{name}</option>)}
               </select>
@@ -94,7 +94,7 @@ function ComposeSalad(props) {
           <h2>Välj dressing</h2>
 
             <div>
-              <select required name={dressing} onChange= {e => {setDressing(e.target.value); e.target.parentElement.classList.add("was-validated");}}>
+              <select required name={dressing} value = {dressing} onChange= {e => {setDressing(e.target.value); e.target.parentElement.classList.add("was-validated");}}>
                 <option hidden value = "">Välj en dressing!</option>
                 {dressings.map(name => <option key={name} value={name}>{name}</option>)}
               </select>
