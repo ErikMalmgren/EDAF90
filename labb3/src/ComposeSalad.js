@@ -27,28 +27,6 @@ function ComposeSalad(props) {
     });
   };  
 
-  const handleChange = event => {
-    console.log(event.target);
-    console.log(event.target.props);
-    console.log(event.target.value);
-    console.log(event.target.name);
-  
-    setFoundation(event.target.value);
-    // switch (name) {
-    //   case 'foundation':
-    //     setFoundation(value);
-    //     break;
-    //   case 'protein':
-    //     setProtein(value);
-    //     break;
-    //   case 'dressing':
-    //     setDressing(value);
-    //     break;
-    //   default:
-    //     break;
-    // }
-    event.target.parentElement.classList.add("was-validated");
-  }
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -76,7 +54,7 @@ function ComposeSalad(props) {
   }
   
   return (
-    // Problem med required och valid-feedback "borde" funka men säkert ett litet fel någonstans
+    
     <div className="container col-12">
     <form onSubmit={handleSubmit} noValidate>
     <div className="row h-200 p-5 bg-light border rounded-3">
@@ -129,6 +107,7 @@ function ComposeSalad(props) {
           <button type="submit" className="btn btn-primary border rounded-3">Beställ</button> 
           <button type="reset" className="btn btn-primary border rounded-3" onClick={resetSalad}>Återställ</button>
         </div>
+
     </div>
   </form>
 </div>
