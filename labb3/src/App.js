@@ -2,7 +2,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import ComposeSalad from "./ComposeSalad";
 import ViewOrder from "./ViewOrder";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Route, Routes, Link } from "react-router-dom";
 import ViewIngredient from "./ViewIngredient";
 
@@ -86,7 +86,7 @@ async function fetchInventory() {
   );
   return combinedInventory;
 }
-
+//TODO: view-ingredient renderar lite väl ofta
 function App(props) {
   const [inventory, setInventory] = useState({});
 
