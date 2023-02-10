@@ -2,7 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import ComposeSalad from './ComposeSalad';
 import ViewOrder from './ViewOrder';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
 import ViewIngredient from './ViewIngredient';
 
@@ -17,8 +17,16 @@ function safeFetchJson(url) {
   }
 
 async function fetchIngredient(props, name) {
-  return await safeFetchJson(`http://localhost:8080/${props}/${name}`);
+  return await safeFetchJson(`http://localhost:8080/${props}/${name}`)
+    .then(ingredient => {
+      return { [name]: ingredient };
+    });
 }
+  
+
+// async function fetchIngredient(props, name) {
+//   return await safeFetchJson(`http://localhost:8080/${props}/${name}`);
+// }
 
 async function fetchFoundations() {
   const foundations =  await safeFetchJson('http://localhost:8080/foundations');
@@ -42,31 +50,37 @@ async function fetchDressings() {
 
 async function fetchInventory() {
   const foundations = await fetchFoundations();
+  console.log(foundations);
   const proteins = await fetchProteins();
   const extras = await fetchExtras();
   const dressings = await fetchDressings();
-  const inventory = {};
-  foundations.forEach(foundation => inventory[foundation.name] = foundation);
-  proteins.forEach(protein => inventory[protein.name] = protein);
-  extras.forEach(extra => inventory[extra.name] = extra);
-  dressings.forEach(dressing => inventory[dressing.name] = dressing);
+  const inventory = {
+    foundations: {},
+    proteins: {},
+    extras: {},
+    dressings: {}
+  };
+  foundations.forEach(foundation => inventory.foundations[foundation.name] = foundation);
+  proteins.forEach(protein => inventory.proteins[protein.name] = protein);
+  extras.forEach(extra => inventory.extras[extra.name] = extra);
+  dressings.forEach(dressing => inventory.dressings[dressing.name] = dressing);
   return inventory;
 }
 
-// async function fetchFoundationProperties() {
-//   const foundations = await fetchFoundations();
-//   const pog = await Promise.all((foundations.map(foundation => fetchIngredient("foundations", foundation))));
-// }
-
-
-
-  
 
 function App(props) {
-  fetchFoundations();
   const [inventory, setInventory] = useState({});
-  const[salads, setSalads] = useState([]);
+  
+  useEffect(() => {
+    async function fetchData() {
+      const data = await fetchInventory();
+      setInventory(data);
+    }
+  fetchData();
+  }, []);
 
+  console.log(inventory);
+  const[salads, setSalads] = useState([]);
   const handleSaladSubmit = (salad) => {
     setSalads([...salads, salad]);
   }
