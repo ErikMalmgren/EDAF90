@@ -173,7 +173,7 @@ function ComposeSalad(props) {
             <div className="invalid-feedback"> Du måste välja en dressing!</div>
           </div>
 
-          <div class="btn-group">
+          <div className="btn-group">
             <button type="submit" className="btn btn-primary border rounded-3">
               Beställ
             </button>

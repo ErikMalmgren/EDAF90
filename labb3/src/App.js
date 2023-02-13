@@ -161,6 +161,10 @@ function App(props) {
             path="view-ingredient/:name"
             element={<ViewIngredient inventory={inventory} />}
           ></Route>
+          <Route
+          path="success"
+          element={<h1>Orderbekräftelse!</h1>}
+          ></Route>
         </Routes>
 
         {<Footer />}
