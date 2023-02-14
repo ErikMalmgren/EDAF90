@@ -2,9 +2,10 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import ComposeSalad from "./ComposeSalad";
 import ViewOrder from "./ViewOrder";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Route, Routes, Link } from "react-router-dom";
 import ViewIngredient from "./ViewIngredient";
+import Salad from "./Salad";
 
 function safeFetchJson(url) {
   return fetch(url).then((response) => {
@@ -92,6 +93,7 @@ function App(props) {
 
   useEffect(() => {
     async function fetchData() {
+      updateShoppingCart(Salad.parseSaladsFromStorage());      
       const data = await fetchInventory();
       setInventory(data);
     }
@@ -103,10 +105,16 @@ function App(props) {
     setSalads([...salads, salad]);
   };
 
+
+  const updateShoppingCart = (shoppingCart) => {
+    setSalads(shoppingCart);
+    console.log("updateShoppingCart");
+    window.localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
+  };
+
   const emptySalads = () => {
     setSalads([]);
   };
-
 
   function Header() {
     return (
@@ -150,6 +158,7 @@ function App(props) {
               <ComposeSalad
                 inventory={inventory}
                 onSaladSubmit={handleSaladSubmit}
+                setShoppingCart={updateShoppingCart}
               />
             }
           ></Route>

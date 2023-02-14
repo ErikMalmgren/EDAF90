@@ -1,4 +1,4 @@
-const imported = require("./inventory.ES6.js");
+const imported = require("./inventory.js");
 const { v4 : uuidv4} = require('uuid');
 
 function makeOptions(inv, prop) {
@@ -45,6 +45,21 @@ class Salad {
 
   count(prop) {
     return Object.values(this.ingredients).filter((item) => item[prop]).length;
+  }
+  
+
+  static parseSaladsFromStorage() {
+    let myCaesarSalad = new Salad()
+    .add('Sallad', imported.inventory['Sallad'])
+    .add('Kycklingfilé', imported.inventory['Kycklingfilé'])
+    .add('Bacon', imported.inventory['Bacon'])
+    .add('Krutonger', imported.inventory['Krutonger'])
+    .add('Parmesan', imported.inventory['Parmesan'])
+    .add('Ceasardressing', imported.inventory['Ceasardressing'])
+    .add('Gurka', imported.inventory['Gurka']); 
+    window.localStorage.setItem("shoppingCart", JSON.stringify(myCaesarSalad));
+    const localCart = JSON.parse(window.localStorage.getItem("shoppingCart"));
+    return localCart ? localCart.map((salad) => new Salad(JSON.stringify(salad))) : [];
   }
 }
 
