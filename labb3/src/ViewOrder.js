@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { Toast, ToastBody, ToastHeader } from "reactstrap";
 
 function ViewOrder(props) {
-  const [shoppingCart, setShoppingCart] = useState(props.shoppingCart);
   const [showToast, setShowToast] = useState(false);
   const [toastData, setToastData] = useState({});
 
 
   const handleOrder = async (event) => {
-    const salads = shoppingCart.map((salad) => Object.keys(salad.ingredients));
+    const salads = props.shoppingCart.map((salad) => Object.keys(salad.ingredients));
     
     const postOptions = {
       method: "POST",
@@ -21,7 +20,6 @@ function ViewOrder(props) {
       const data = await response.json();
       setToastData(data);
       setShowToast(true);
-      setShoppingCart([]);
       props.emptySalads();
     } catch (error) {
       console.error(error);
@@ -32,7 +30,7 @@ function ViewOrder(props) {
   return (
     <div className="container col-12 h-200 p-5 fs-4 mb-4 py-4 bg-light border rounded-3">
       <h2>Beställningen</h2>
-      {shoppingCart.map((salad) => (
+      {props.shoppingCart.map((salad) => (
         <div key={salad.uuid}>
           {" "}
           {Object.keys(salad.ingredients).join(", ")} , pris: {salad.getPrice()}{" "}

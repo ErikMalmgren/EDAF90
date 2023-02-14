@@ -155,7 +155,10 @@ function App(props) {
           ></Route>
           <Route
             path="/view-order"
-            element={<ViewOrder shoppingCart={salads} emptySalads={emptySalads}/>}
+            element={<ViewOrder 
+              shoppingCart={salads} 
+              emptySalads={emptySalads}
+              />}
           ></Route>
           <Route
             path="/"
