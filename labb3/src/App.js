@@ -103,6 +103,11 @@ function App(props) {
     setSalads([...salads, salad]);
   };
 
+  const emptySalads = () => {
+    setSalads([]);
+  };
+
+
   function Header() {
     return (
       <header className="pb-3 mb-4 border-bottom">
@@ -150,7 +155,7 @@ function App(props) {
           ></Route>
           <Route
             path="/view-order"
-            element={<ViewOrder shoppingCart={salads} />}
+            element={<ViewOrder shoppingCart={salads} emptySalads={emptySalads}/>}
           ></Route>
           <Route
             path="/"
@@ -159,7 +164,7 @@ function App(props) {
           <Route path="*" element={<h1>Sidan finns inte</h1>}></Route>
           <Route
             path="view-ingredient/:name"
-            element={<ViewIngredient inventory={inventory} />}
+            element={<ViewIngredient inventory={inventory}/>}
           ></Route>
           <Route
           path="success"

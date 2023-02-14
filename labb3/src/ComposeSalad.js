@@ -3,7 +3,7 @@ import Salad from "./Salad.js";
 import { useNavigate, Link } from "react-router-dom";
 
 function ComposeSalad(props) {
-  // använd usememo istället
+
   const navigate = useNavigate();
 
   const foundations = useMemo(() => {
@@ -50,10 +50,7 @@ function ComposeSalad(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     event.target.classList.add("was-validated");
-    // if(!event.target.checkValidity()) { //behövs inte när required används
-    //   return;
-    // }
-
+    
     const extras = Object.keys(extra).filter((n) => extra[n]);
     const ingredients = [foundation, protein, ...extras, dressing];
     const salad = new Salad();
@@ -64,6 +61,7 @@ function ComposeSalad(props) {
     resetSalad();
     props.onSaladSubmit(salad);
     navigate("/view-order");
+    console.log(props);
   };
 
   const resetSalad = function () {

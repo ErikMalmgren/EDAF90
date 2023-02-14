@@ -22,7 +22,7 @@ function ViewOrder(props) {
       setToastData(data);
       setShowToast(true);
       setShoppingCart([]);
-
+      props.emptySalads();
     } catch (error) {
       console.error(error);
     }
