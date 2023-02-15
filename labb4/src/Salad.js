@@ -1,4 +1,3 @@
-const imported = require("./inventory.js");
 const { v4: uuidv4 } = require("uuid");
 
 function makeOptions(inv, prop) {
