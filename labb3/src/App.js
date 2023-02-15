@@ -93,19 +93,18 @@ function App(props) {
   const [salads, setSalads] = useState([]);
 
   useEffect(() => {
-    loadShoppingCart(); 
+    loadShoppingCart();
     async function fetchData() {
       const data = await fetchInventory();
       setInventory(data);
     }
     fetchData();
   }, []);
-  
+
   const handleSaladSubmit = (salad) => {
-    window.localStorage.setItem("shoppingCart", JSON.stringify(salads));
     setSalads([...salads, salad]);
     console.log(salads);
-    // window.localStorage.setItem("shoppingCart", JSON.stringify(salads));
+    window.localStorage.setItem("shoppingCart", JSON.stringify(salads));
     console.log(JSON.stringify(salads));
   };
 
@@ -113,7 +112,7 @@ function App(props) {
     const saladsFromStorage = Salad.parseSaladsFromStorage();
     setSalads(saladsFromStorage);
   };
-    
+
   const emptySalads = () => {
     setSalads([]);
     window.localStorage.removeItem("shoppingCart");
@@ -166,10 +165,9 @@ function App(props) {
           ></Route>
           <Route
             path="/view-order"
-            element={<ViewOrder 
-              shoppingCart={salads} 
-              emptySalads={emptySalads}
-              />}
+            element={
+              <ViewOrder shoppingCart={salads} emptySalads={emptySalads} />
+            }
           ></Route>
           <Route
             path="/"
@@ -178,12 +176,9 @@ function App(props) {
           <Route path="*" element={<h1>Sidan finns inte</h1>}></Route>
           <Route
             path="view-ingredient/:name"
-            element={<ViewIngredient inventory={inventory}/>}
+            element={<ViewIngredient inventory={inventory} />}
           ></Route>
-          <Route
-          path="success"
-          element={<h1>Orderbekräftelse!</h1>}
-          ></Route>
+          <Route path="success" element={<h1>Orderbekräftelse!</h1>}></Route>
         </Routes>
 
         {<Footer />}

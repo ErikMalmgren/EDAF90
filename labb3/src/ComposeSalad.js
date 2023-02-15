@@ -3,7 +3,6 @@ import Salad from "./Salad.js";
 import { useNavigate, Link } from "react-router-dom";
 
 function ComposeSalad(props) {
-
   const navigate = useNavigate();
 
   const foundations = useMemo(() => {
@@ -50,7 +49,7 @@ function ComposeSalad(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     event.target.classList.add("was-validated");
-    
+
     const extras = Object.keys(extra).filter((n) => extra[n]);
     const ingredients = [foundation, protein, ...extras, dressing];
     const salad = new Salad();
