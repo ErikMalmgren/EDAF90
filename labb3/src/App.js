@@ -2,7 +2,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import ComposeSalad from "./ComposeSalad";
 import ViewOrder from "./ViewOrder";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Route, Routes, Link } from "react-router-dom";
 import ViewIngredient from "./ViewIngredient";
 import Salad from "./Salad";
@@ -94,6 +94,7 @@ function App(props) {
 
   useEffect(() => {
     loadShoppingCart();
+    console.log("useEffect" + window.localStorage.getItem("shoppingCart"));
     async function fetchData() {
       const data = await fetchInventory();
       setInventory(data);
@@ -102,19 +103,17 @@ function App(props) {
   }, []);
 
   const handleSaladSubmit = (salad) => {
+    window.localStorage.setItem("shoppingCart", JSON.stringify([...salads, salad]));
     setSalads([...salads, salad]);
-    console.log(salads);
-    console.log("i handleSaladSubmit innan setITem" + window.localStorage.getItem("shoppingCart"));
-    window.localStorage.setItem("shoppingCart", JSON.stringify(salads));
-    console.log("efter setItem" + window.localStorage.getItem("shoppingCart"));
-    console.log(JSON.stringify(salads));
   };
+
 
   const loadShoppingCart = () => {
     console.log("loadShoppingCart:" + window.localStorage.getItem("shoppingCart"));
     const saladsFromStorage = Salad.parseSaladsFromStorage();
     setSalads(saladsFromStorage);
   };
+
 
   const emptySalads = () => {
     setSalads([]);
