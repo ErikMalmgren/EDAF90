@@ -8,7 +8,6 @@ function ViewOrder(props) {
 
   const handleOrder = async (event) => {
     const salads = props.shoppingCart.map((salad) => Object.keys(salad.ingredients));
-    window.localStorage.setItem("shoppingCart", JSON.stringify(salads));
     
     const postOptions = {
       method: "POST",
@@ -22,7 +21,6 @@ function ViewOrder(props) {
       setToastData(data);
       setShowToast(true);
       props.emptySalads();
-      window.localStorage.setItem("shoppingCart", []);
     } catch (error) {
       console.error(error);
     }

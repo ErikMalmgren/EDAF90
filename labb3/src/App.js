@@ -90,30 +90,33 @@ async function fetchInventory() {
 //TODO: view-ingredient renderar lite väl ofta
 function App(props) {
   const [inventory, setInventory] = useState({});
+  const [salads, setSalads] = useState([]);
 
   useEffect(() => {
+    loadShoppingCart(); 
     async function fetchData() {
-      updateShoppingCart(Salad.parseSaladsFromStorage());      
       const data = await fetchInventory();
       setInventory(data);
     }
     fetchData();
   }, []);
-
-  const [salads, setSalads] = useState([]);
+  
   const handleSaladSubmit = (salad) => {
+    window.localStorage.setItem("shoppingCart", JSON.stringify(salads));
     setSalads([...salads, salad]);
+    console.log(salads);
+    // window.localStorage.setItem("shoppingCart", JSON.stringify(salads));
+    console.log(JSON.stringify(salads));
   };
 
-
-  const updateShoppingCart = (shoppingCart) => {
-    setSalads(shoppingCart);
-    console.log("updateShoppingCart");
-    window.localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
+  const loadShoppingCart = () => {
+    const saladsFromStorage = Salad.parseSaladsFromStorage();
+    setSalads(saladsFromStorage);
   };
-
+    
   const emptySalads = () => {
     setSalads([]);
+    window.localStorage.removeItem("shoppingCart");
   };
 
   function Header() {
@@ -158,7 +161,6 @@ function App(props) {
               <ComposeSalad
                 inventory={inventory}
                 onSaladSubmit={handleSaladSubmit}
-                setShoppingCart={updateShoppingCart}
               />
             }
           ></Route>

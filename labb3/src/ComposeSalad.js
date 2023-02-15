@@ -58,7 +58,6 @@ function ComposeSalad(props) {
     ingredients.forEach((ingredient) =>
       salad.add(ingredient, props.inventory[ingredient])
     );
-    props.setShoppingCart([...props.shoppingCart, salad]);
     resetSalad();
     props.onSaladSubmit(salad);
     navigate("/view-order");
