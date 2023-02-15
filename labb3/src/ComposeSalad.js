@@ -59,6 +59,7 @@ function ComposeSalad(props) {
     );
     resetSalad();
     props.onSaladSubmit(salad);
+    console.log("composeSalad" + window.localStorage.getItem("shoppingCart"));
     navigate("/view-order");
   };
 

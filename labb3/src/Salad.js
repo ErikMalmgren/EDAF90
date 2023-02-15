@@ -59,12 +59,12 @@ class Salad {
 
   static parseSaladsFromStorage() {
     // parse all salads from window.localStorage with the key "shoppingCart", and recreate the salad objects stored then return an array of  created salad objects
-    console.log(window.localStorage.getItem("shoppingCart"));
     try {
       const localCart = JSON.parse(window.localStorage.getItem("shoppingCart"));
       const salads = localCart
-        ? localCart.map((salad) => new Salad(salad))
+        ? localCart.map((salad) => new Salad(JSON.stringify(salad)))
         : [];
+      console.log(salads);
       return salads;
     } catch (error) {
       console.log(error);
