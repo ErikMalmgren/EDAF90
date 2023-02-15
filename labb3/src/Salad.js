@@ -64,7 +64,6 @@ class Salad {
       const salads = localCart
         ? localCart.map((salad) => new Salad(JSON.stringify(salad)))
         : [];
-      console.log(salads);
       return salads;
     } catch (error) {
       console.log(error);

@@ -24,61 +24,23 @@ async function fetchIngredient(props, name) {
   );
 }
 
-//TODO: Lyfta ut gemensam kod från dessa
-async function fetchFoundations() {
-  const foundations = await safeFetchJson("http://localhost:8080/foundations");
+async function fetchInventory(property) {
+  const ingredients = await safeFetchJson(`http://localhost:8080/${property}`);
   return (
     await Promise.all(
-      foundations.map((foundation) =>
-        fetchIngredient("foundations", foundation)
-      )
+      ingredients.map((name) => fetchIngredient(property, name))
     )
   ).reduce((acc, curr) => {
-    const [foundationName] = Object.keys(curr);
-    return { ...acc, [foundationName]: curr[foundationName] };
+    const [ingredientName] = Object.keys(curr);
+    return { ...acc, [ingredientName]: curr[ingredientName] };
   }, {});
 }
 
-async function fetchProteins() {
-  const proteins = await safeFetchJson("http://localhost:8080/proteins");
-  return (
-    await Promise.all(
-      proteins.map((protein) => fetchIngredient("proteins", protein))
-    )
-  ).reduce((acc, curr) => {
-    const [proteinName] = Object.keys(curr);
-    return { ...acc, [proteinName]: curr[proteinName] };
-  }, {});
-}
-
-async function fetchExtras() {
-  const extras = await safeFetchJson("http://localhost:8080/extras");
-  return (
-    await Promise.all(extras.map((extra) => fetchIngredient("extras", extra)))
-  ).reduce((acc, curr) => {
-    const [extraName] = Object.keys(curr);
-    return { ...acc, [extraName]: curr[extraName] };
-  }, {});
-}
-
-async function fetchDressings() {
-  const dressings = await safeFetchJson("http://localhost:8080/dressings");
-  return (
-    await Promise.all(
-      dressings.map((dressing) => fetchIngredient("dressings", dressing))
-    )
-  ).reduce((acc, curr) => {
-    const [dressingName] = Object.keys(curr);
-    return { ...acc, [dressingName]: curr[dressingName] };
-  }, {});
-}
-
-//TODO: eventuellt göra reduce här
-async function fetchInventory() {
-  const foundations = await fetchFoundations();
-  const proteins = await fetchProteins();
-  const extras = await fetchExtras();
-  const dressings = await fetchDressings();
+async function fetchAll() {
+  const foundations = await fetchInventory("foundations");
+  const proteins = await fetchInventory("proteins");
+  const extras = await fetchInventory("extras");
+  const dressings = await fetchInventory("dressings");
   const combinedInventory = Object.assign(
     foundations,
     proteins,
@@ -87,33 +49,33 @@ async function fetchInventory() {
   );
   return combinedInventory;
 }
-//TODO: view-ingredient renderar lite väl ofta
+
 function App(props) {
   const [inventory, setInventory] = useState({});
   const [salads, setSalads] = useState([]);
 
   useEffect(() => {
     loadShoppingCart();
-    console.log("useEffect" + window.localStorage.getItem("shoppingCart"));
     async function fetchData() {
-      const data = await fetchInventory();
+      const data = await fetchAll();
       setInventory(data);
+      console.log("pog");
     }
     fetchData();
   }, []);
 
   const handleSaladSubmit = (salad) => {
-    window.localStorage.setItem("shoppingCart", JSON.stringify([...salads, salad]));
+    window.localStorage.setItem(
+      "shoppingCart",
+      JSON.stringify([...salads, salad])
+    );
     setSalads([...salads, salad]);
   };
 
-
   const loadShoppingCart = () => {
-    console.log("loadShoppingCart:" + window.localStorage.getItem("shoppingCart"));
     const saladsFromStorage = Salad.parseSaladsFromStorage();
     setSalads(saladsFromStorage);
   };
-
 
   const emptySalads = () => {
     setSalads([]);
@@ -122,8 +84,8 @@ function App(props) {
 
   function Header() {
     return (
-      <header className="pb-3 mb-4 border-bottom">
-        <span className="fs-4">Min egen salladsbar</span>
+      <header className="p-3 pb-2 mb-1 border-bottom">
+        <span className="fs-3">Grönt och skönt</span>
       </header>
     );
   }
@@ -131,12 +93,12 @@ function App(props) {
   function Navbar(props) {
     return (
       <ul className="nav nav-tabs">
-        <li className="nav-item">
+        <li className="nav-item pb-1">
           <Link className="nav-link" to="/">
             Startsida
           </Link>
         </li>
-        <li className="nav-item">
+        <li className="nav-item pb-1">
           <Link className="nav-link" to="/compose-salad">
             Komponera en sallad
           </Link>
@@ -173,7 +135,14 @@ function App(props) {
           ></Route>
           <Route
             path="/"
-            element={<h1>Välkommen till Grönt och Skönt</h1>}
+            element={
+              <div className="container mt-4" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <h1 style={{ textAlign: "center" }}>
+                  Välkommen till Grönt och Skönt
+                </h1>
+                <img src = "/salad.webp" alt="En riktigt najs salad"></img>
+              </div>
+            }
           ></Route>
           <Route path="*" element={<h1>Sidan finns inte</h1>}></Route>
           <Route

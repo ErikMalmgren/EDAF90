@@ -59,7 +59,6 @@ function ComposeSalad(props) {
     );
     resetSalad();
     props.onSaladSubmit(salad);
-    console.log("composeSalad" + window.localStorage.getItem("shoppingCart"));
     navigate("/view-order");
   };
 
@@ -74,8 +73,8 @@ function ComposeSalad(props) {
     <div className="container col-12">
       <form onSubmit={handleSubmit} noValidate>
         <div className="row h-200 p-5 bg-light border rounded-3">
+          <div className="pb-2">
           <h2>Välj bas</h2>
-          <div>
             <select
               required
               name={foundation}
@@ -100,9 +99,8 @@ function ComposeSalad(props) {
               Du måste välja en salladsbas!
             </div>
           </div>
-
+          <div className="pb-2 pt-2">
           <h2>Välj protein</h2>
-          <div>
             <select
               required
               name={protein}
@@ -124,8 +122,7 @@ function ComposeSalad(props) {
             <div className="valid-feedback"> Bra val!</div>
             <div className="invalid-feedback"> Du måste välja ett protein!</div>
           </div>
-
-          <h2>Välj tillbehör</h2>
+          <h2 className="pt-2">Välj tillbehör</h2>
           {extras.map((item, index) => (
             <div key={index} className="col-3 p-2 fs-6">
               <input
@@ -144,10 +141,8 @@ function ComposeSalad(props) {
               </Link>
             </div>
           ))}
-
+          <div className="pt-1 pb-4">
           <h2>Välj dressing</h2>
-
-          <div>
             <select
               required
               name={dressing}
@@ -171,12 +166,12 @@ function ComposeSalad(props) {
           </div>
 
           <div className="btn-group">
-            <button type="submit" className="btn btn-primary border rounded-3">
+            <button type="submit" className="btn btn-block btn-lg btn-primary border rounded-3">
               Beställ
             </button>
             <button
               type="reset"
-              className="btn btn-primary border rounded-3"
+              className="btn btn-block btn-light btn-lg border rounded-3"
               onClick={resetSalad}
             >
               Återställ
