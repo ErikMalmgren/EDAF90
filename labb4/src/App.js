@@ -37,15 +37,16 @@ async function fetchInventory(property) {
 }
 
 async function fetchAll() {
-  const foundations = await fetchInventory("foundations");
-  const proteins = await fetchInventory("proteins");
-  const extras = await fetchInventory("extras");
-  const dressings = await fetchInventory("dressings");
-  const combinedInventory = Object.assign(
+  const foundations = fetchInventory("foundations");
+  const proteins = fetchInventory("proteins");
+  const extras = fetchInventory("extras");
+  const dressings = fetchInventory("dressings");
+
+  const combinedInventory = Object.assign(...await Promise.all([
     foundations,
     proteins,
     extras,
-    dressings
+    dressings])
   );
   return combinedInventory;
 }
@@ -59,7 +60,7 @@ function App(props) {
     async function fetchData() {
       const data = await fetchAll();
       setInventory(data);
-      console.log("pog");
+      // console.log("pog");
     }
     fetchData();
   }, []);
